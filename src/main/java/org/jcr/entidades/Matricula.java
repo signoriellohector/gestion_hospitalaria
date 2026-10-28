@@ -9,5 +9,23 @@ package org.jcr.entidades;
  * @author signo
  */
 public class Matricula {
+    private String numero;
+
+    public Matricula(String numero) {
+        setMatricula(numero);
+    }
     
+    private void setMatricula( String numero){
+        if (validarMatricula(numero)){
+            this.numero = numero;
+        } 
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+    
+    private boolean validarMatricula(String numero){
+        return true;
+    }
 }
