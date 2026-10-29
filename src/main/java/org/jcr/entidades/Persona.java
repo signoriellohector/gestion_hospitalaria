@@ -26,6 +26,10 @@ public abstract class Persona {
         setFechaNacimiento(fechaNacimiento);
         setTipoSangre(tipoSangre);
     }
+    
+    private boolean validarDni(String dni){
+        return true;
+    }
 
     private void setNombre(String nombre) {
         this.nombre = nombre;
@@ -36,7 +40,9 @@ public abstract class Persona {
     }
 
     private void setDni(String dni) {
-        this.dni = dni;
+        if (validarDni(dni)){
+            this.dni = dni;
+        }
     }
 
     private void setFechaNacimiento(LocalDate fechaNacimiento) {
