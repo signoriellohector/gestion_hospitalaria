@@ -4,10 +4,20 @@
  */
 package org.jcr.entidades;
 
+import java.util.List;
+
 /**
  *
  * @author signo
  */
-public class Paciente {
-    
+public class Paciente extends Persona{
+    private HistoriaClinica historiaClinica;
+    private String telefono;
+    private String direccion;
+    private Hospital hospital;
+    private List<Cita> citas;
+
+    String getDni() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
