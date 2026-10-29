@@ -13,7 +13,7 @@ public class Validaciones {
     private Validaciones() {
     }
     
-    String textoObligatorio(String valor, String mensajeError){
+    static String textoObligatorio(String valor, String mensajeError){
         if (valor == null || valor.isEmpty()){
             throw new IllegalArgumentException(mensajeError);
         }
@@ -21,13 +21,13 @@ public class Validaciones {
         return valor;
     }
     
-    void noNulo(Object valor,String mensajeError){
+    static void noNulo(Object valor,String mensajeError){
         if (valor == null){
             throw new IllegalArgumentException(mensajeError);
         }
     }
     
-    boolean sonDigitos(String texto){
+    static boolean sonDigitos(String texto){
         boolean digitos = !texto.isEmpty() && texto.chars().allMatch(c -> c >= '0' && c <= '9');
         
         return digitos;
