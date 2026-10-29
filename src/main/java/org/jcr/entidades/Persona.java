@@ -27,8 +27,8 @@ public abstract class Persona {
         setTipoSangre(tipoSangre);
     }
     
-    private boolean validarDni(String dni){
-        return true;
+    private boolean validarDni(String dni){ 
+        return Validaciones.sonDigitos(dni) && dni.length() >= 7 && dni.length() <= 8;
     }
 
     private void setNombre(String nombre) {
@@ -42,14 +42,18 @@ public abstract class Persona {
     private void setDni(String dni) {
         if (validarDni(dni)){
             this.dni = dni;
+        } else {
+            throw new IllegalArgumentException("Error: DNI no valido");
         }
     }
 
     private void setFechaNacimiento(LocalDate fechaNacimiento) {
+        Validaciones.noNulo(fechaNacimiento, "Error: Fecha de nacimiento nula");
         this.fechaNacimiento = fechaNacimiento;
     }
 
     private void setTipoSangre(TipoSangre tipoSangre) {
+        Validaciones.noNulo(tipoSangre, "Error: tipo de sangre nula");
         this.tipoSangre = tipoSangre;
     }
 
