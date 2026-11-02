@@ -14,7 +14,7 @@ public class Validaciones {
     }
     
     static String textoObligatorio(String valor, String mensajeError){
-        if (valor == null || valor.isEmpty()){
+        if (valor == null || valor.isBlank()){
             throw new IllegalArgumentException(mensajeError);
         }
         
