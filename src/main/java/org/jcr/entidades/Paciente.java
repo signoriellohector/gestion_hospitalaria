@@ -4,7 +4,9 @@
  */
 package org.jcr.entidades;
 
+import java.time.LocalDate;
 import java.util.List;
+import org.jcr.enums.TipoSangre;
 
 /**
  *
@@ -17,7 +19,59 @@ public class Paciente extends Persona{
     private Hospital hospital;
     private List<Cita> citas;
 
-    String getDni() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Paciente(String nombre, String apellido, 
+            String dni, LocalDate fechaNacimiento, TipoSangre tipoSangre,
+            String telefono, String direccion) {
+        
+        super(nombre, apellido, dni, fechaNacimiento, tipoSangre);
+        setTelefono(telefono);
+        setDireccion(direccion);
+        setHospital(hospital);
+        this.historiaClinica = new HistoriaClinica(this);
+        
+        
     }
+    
+    //---- Setter ----
+
+    public void setTelefono(String telefono) {
+        this.telefono = Validaciones.textoObligatorio(telefono, "Error: El telefono no puede ser nulo estar vacío");
+    }
+
+    public void setDireccion(String direccion) {   
+        this.direccion = Validaciones.textoObligatorio(direccion, "Error: La direccion no puede ser nula o estar vacía");
+    }
+
+    public void setHospital(Hospital hospital) {
+        Validaciones.noNulo(hospital, "Error: Hospital no puede ser nulo.");
+        this.hospital = hospital;
+    }
+    
+    public void addCita(Cita cita){
+        citas.add(cita);
+    }
+
+    // ------ Getter ----
+    
+    public HistoriaClinica getHistoriaClinica() {
+        return historiaClinica;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public Hospital getHospital() {
+        return hospital;
+    }
+
+    public List<Cita> getCitas() {
+        return citas;
+    }
+    
+    
 }
