@@ -5,6 +5,7 @@
 package org.jcr.entidades;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import org.jcr.enums.TipoSangre;
 
@@ -28,6 +29,7 @@ public class Paciente extends Persona{
         setDireccion(direccion);
         setHospital(hospital);
         this.historiaClinica = new HistoriaClinica(this);
+        this.citas = new ArrayList<>();
         
         
     }

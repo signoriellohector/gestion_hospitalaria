@@ -5,6 +5,7 @@
 package org.jcr.entidades;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import org.jcr.enums.EspecialidadMedica;
 import org.jcr.enums.TipoSangre;
@@ -26,6 +27,7 @@ public class Medico extends Persona{
         super(nombre, apellido, dni, fechaNacimiento, tipoSangre);
         setMatricula(numeroMatricula);
         setEspacialidad(especialidad);
+        this.citas = new ArrayList<>();
     }
     
     // ----- Setters -----
