@@ -4,10 +4,98 @@
  */
 package org.jcr.entidades;
 
+import java.time.LocalDate;
+import java.time.MonthDay;
+import org.jcr.enums.TipoSangre;
+
 /**
  *
  * @author signo
  */
-public class Persona {
+public abstract class Persona {
+    protected String nombre;
+    protected String apellido;
+    protected String dni;
+    protected LocalDate fechaNacimiento;
+    protected TipoSangre tipoSangre;
+
+    public Persona(String nombre, String apellido, String dni, LocalDate fechaNacimiento, TipoSangre tipoSangre) {
+        setNombre(nombre);
+        setApellido(apellido);
+        setDni(dni);
+        setFechaNacimiento(fechaNacimiento);
+        setTipoSangre(tipoSangre);
+    }
     
+    private boolean validarDni(String dni){ 
+        return Validaciones.sonDigitos(dni) && dni.length() >= 7 && dni.length() <= 8;
+    }
+
+    private void setNombre(String nombre) {
+        this.nombre = Validaciones.textoObligatorio(nombre, "Error: Nombre no puede ser nulo o estar vacío.");
+    }
+
+    private void setApellido(String apellido) {
+        this.apellido = Validaciones.textoObligatorio(apellido, "Error: Apellido no puede ser nulo o estar vacío.");
+    }
+
+    private void setDni(String dni) {
+        if (validarDni(dni)){
+            this.dni = dni;
+        } else {
+            throw new IllegalArgumentException("Error: DNI no valido");
+        }
+    }
+
+    private void setFechaNacimiento(LocalDate fechaNacimiento) {
+        Validaciones.noNulo(fechaNacimiento, "Error: Fecha de nacimiento nula");
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    private void setTipoSangre(TipoSangre tipoSangre) {
+        Validaciones.noNulo(tipoSangre, "Error: tipo de sangre nula");
+        this.tipoSangre = tipoSangre;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public TipoSangre getTipoSangre() {
+        return tipoSangre;
+    }
+    
+    public String getNombreCompleto(){
+        return nombre + " " + apellido;
+        
+    }
+    
+    public int getEdad(){
+        // se obtiene la fecha actual.
+        LocalDate fecha_actual = LocalDate.now();
+        
+        // se obtiene el cumpleaños de la persona con el año actual
+        LocalDate cumpleanios = MonthDay.from(fechaNacimiento).atYear(fecha_actual.getYear());
+        int edad = 0;
+        
+        if (cumpleanios.isBefore(fecha_actual) || cumpleanios.equals(fecha_actual)) {
+            edad = fecha_actual.getYear() - fechaNacimiento.getYear();
+        } else {
+            edad = fecha_actual.getYear() - fechaNacimiento.getYear() - 1;
+        }
+        
+        return edad;
+    }
 }
