@@ -46,8 +46,9 @@ public class Paciente extends Persona{
     }
 
     public void setHospital(Hospital hospital) {
-        Validaciones.noNulo(hospital, "Error: Hospital no puede ser nulo.");
-        this.hospital = hospital;
+        if(this.hospital != hospital && this.hospital != null){
+           
+        }
     }
     
     public void addCita(Cita cita){
