@@ -73,5 +73,10 @@ public class Hospital {
         return pacientes;
     }
     
+    public void removeDepartamento(Departamento departamento){
+        if(departamentos.contains(departamento)){
+            departamentos.remove(departamento);
+        }
+    }
     
 }

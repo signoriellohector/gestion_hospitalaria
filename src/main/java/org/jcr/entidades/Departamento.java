@@ -79,6 +79,10 @@ public class Departamento {
     public Hospital getHospital() {
         return hospital;
     }
+
+    public EspecialidadMedica getEspecialidad() {
+        return especialidad;
+    }
     
     
 }
