@@ -32,11 +32,11 @@ public abstract class Persona {
     }
 
     private void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = Validaciones.textoObligatorio(nombre, "Error: Nombre no puede ser nulo o estar vacío.");
     }
 
     private void setApellido(String apellido) {
-        this.apellido = apellido;
+        this.apellido = Validaciones.textoObligatorio(apellido, "Error: Apellido no puede ser nulo o estar vacío.");
     }
 
     private void setDni(String dni) {

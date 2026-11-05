@@ -6,6 +6,7 @@ package org.jcr.entidades;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,31 +52,31 @@ public class HistoriaClinica {
     }
 
     public List<String> getDiagnosticos() {
-        return diagnosticos;
+        return Collections.unmodifiableList(diagnosticos);
     }
 
     public List<String> getTratamientos() {
-        return tratamientos;
+        return Collections.unmodifiableList(tratamientos);
     }
 
     public List<String> getAlergias() {
-        return alergias;
+        return Collections.unmodifiableList(alergias);
     }
 
     public void agregarDiagnostico(String diagnostico){
-        if (diagnostico != null && !diagnostico.isEmpty()) {
+        if (diagnostico != null && !diagnostico.isBlank()) {
             diagnosticos.add(diagnostico);
         }
     }
     
     public void agregarTratamiento(String tratamiento){
-        if (tratamiento != null && !tratamiento.isEmpty()){
+        if (tratamiento != null && !tratamiento.isBlank()){
             tratamientos.add(tratamiento);
         }
     }
     
     public void agregarAlergia(String alergia){
-        if (alergia != null && !alergia.isEmpty()){
+        if (alergia != null && !alergia.isBlank()){
             alergias.add(alergia);
         }
     }
