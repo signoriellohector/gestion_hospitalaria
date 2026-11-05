@@ -46,9 +46,20 @@ public class Paciente extends Persona{
     }
 
     public void setHospital(Hospital hospital) {
-        if(this.hospital != hospital && this.hospital != null){
-           
+        if(this.hospital != hospital){
+            Hospital h = this.hospital;
+            this.hospital = hospital;
+            if (this.hospital != null && !this.hospital.getPacientes().contains(this)){
+                this.hospital.agregarPaciente(this);
+            }
+            
+            if (h != null){
+                h.removePaciente(this);
+            }
+            
         }
+        
+        
     }
     
     public void addCita(Cita cita){

@@ -63,7 +63,10 @@ public class Cita {
     public void setObservaciones(String observaciones) {
         if (observaciones != null) {
             this.observaciones = observaciones;
+        } else {
+            this.observaciones = "";
         }
+        
     }
 
     // ----- Getters -----

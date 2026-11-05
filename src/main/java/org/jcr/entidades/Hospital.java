@@ -41,7 +41,7 @@ public class Hospital {
     
     public void agregarDepartamento(Departamento departamento){
         if(!departamentos.contains(departamento)){
-            departamentos.add(departamento);
+            departamentos.add(departamento);          
             departamento.setHospital(this);
         }
     
@@ -50,8 +50,6 @@ public class Hospital {
     public void agregarPaciente(Paciente paciente){
         if(!pacientes.contains(paciente)){
             pacientes.add(paciente);
-        }
-        if(paciente.getHospital() != this){
             paciente.setHospital(this);
         }
     }
@@ -64,7 +62,7 @@ public class Hospital {
         return Collections.unmodifiableList(pacientes);
     }
     
-    
+    /*
     List<Departamento> getInternalDepartamentos() {
         return departamentos;
     }
@@ -72,11 +70,19 @@ public class Hospital {
     List<Paciente> getInternalPacientes() {
         return pacientes;
     }
+    */
     
     public void removeDepartamento(Departamento departamento){
         if(departamentos.contains(departamento)){
             departamentos.remove(departamento);
+            departamento.setHospital(null);
         }
     }
     
+    public void removePaciente(Paciente paciente){
+        if(pacientes.contains(paciente)){
+            pacientes.remove(paciente);
+            paciente.setHospital(null);
+        }
+    }
 }

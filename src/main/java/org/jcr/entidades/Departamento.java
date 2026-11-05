@@ -41,12 +41,19 @@ public class Departamento {
 
     public void setHospital(Hospital hospital) {
         if (this.hospital != hospital){
-            if(this.hospital != null) {
+            Hospital h = this.hospital;
+            this.hospital = hospital;
+            if(h != null) {
                 this.hospital.removeDepartamento(this);
             } 
-            this.hospital = hospital;
-            this.hospital.agregarDepartamento(this);
+            
+            
+            if(this.hospital != null && !this.hospital.getDepartamentos().contains(this)) {
+                this.hospital.agregarDepartamento(this);
+            }
+            
         }
+        
     }
     
     public void agregarMedico(Medico medico){
