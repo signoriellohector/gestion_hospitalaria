@@ -6,6 +6,7 @@ package org.jcr.entidades;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.jcr.enums.TipoSangre;
 
@@ -72,7 +73,7 @@ public class Paciente extends Persona{
     }
 
     public List<Cita> getCitas() {
-        return citas;
+        return Collections.unmodifiableList(citas);
     }
     
     

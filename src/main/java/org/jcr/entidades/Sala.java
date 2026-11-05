@@ -5,6 +5,7 @@
 package org.jcr.entidades;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,14 +26,12 @@ public class Sala {
     }
 
     // ------ Setters
-    private void setNumero(String numero) {
-        Validaciones.noNulo(numero, "Error: Numero de sala no puede ser nulo");
-        this.numero = numero;
+    private void setNumero(String numero) {       
+        this.numero = Validaciones.textoObligatorio(numero, "Error: Numero de sala no puede ser nulo");
     }
 
-    private void setTipo(String tipo) {
-        Validaciones.noNulo(tipo, "Error: Tipo de sala no puede ser nulo");
-        this.tipo = tipo;
+    private void setTipo(String tipo) {       
+        this.tipo = Validaciones.textoObligatorio(tipo, "Error: Tipo de sala no puede ser nulo");
     }
 
     private void setDepartamento(Departamento departamento) {
@@ -58,7 +57,7 @@ public class Sala {
     }
 
     public List<Cita> getCitas() {
-        return citas;
+        return Collections.unmodifiableList(citas);
     }
     
     
