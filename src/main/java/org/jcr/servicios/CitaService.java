@@ -21,9 +21,9 @@ import org.jcr.excepciones.CitaException;
 public interface CitaService {
     public Cita programarCita(Paciente paciente, Medico medico, Sala sala, LocalDateTime fechaHora, double costo) throws CitaException;
     
-    public List<Cita> getCitaPorPaciente(Paciente paciente);
+    public List<Cita> getCitasPorPaciente(Paciente paciente);
     
-    public List<Cita> getCitaPorMedico(Medico medico);
+    public List<Cita> getCitasPorMedico(Medico medico);
     
-    public List<Cita> getCitaPorSala(Sala sala);
+    public List<Cita> getCitasPorSala(Sala sala);
 }
