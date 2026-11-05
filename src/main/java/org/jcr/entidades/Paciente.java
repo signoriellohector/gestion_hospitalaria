@@ -28,7 +28,6 @@ public class Paciente extends Persona{
         super(nombre, apellido, dni, fechaNacimiento, tipoSangre);
         setTelefono(telefono);
         setDireccion(direccion);
-        setHospital(hospital);
         this.historiaClinica = new HistoriaClinica(this);
         this.citas = new ArrayList<>();
         
@@ -37,11 +36,11 @@ public class Paciente extends Persona{
     
     //---- Setter ----
 
-    public void setTelefono(String telefono) {
+    private void setTelefono(String telefono) {
         this.telefono = Validaciones.textoObligatorio(telefono, "Error: El telefono no puede ser nulo estar vacío");
     }
 
-    public void setDireccion(String direccion) {   
+    private void setDireccion(String direccion) {   
         this.direccion = Validaciones.textoObligatorio(direccion, "Error: La direccion no puede ser nula o estar vacía");
     }
 
@@ -49,6 +48,7 @@ public class Paciente extends Persona{
         if(this.hospital != hospital){
             Hospital h = this.hospital;
             this.hospital = hospital;
+            
             if (this.hospital != null && !this.hospital.getPacientes().contains(this)){
                 this.hospital.agregarPaciente(this);
             }

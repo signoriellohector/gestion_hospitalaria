@@ -73,15 +73,14 @@ public class Hospital {
     */
     
     public void removeDepartamento(Departamento departamento){
-        if(departamentos.contains(departamento)){
-            departamentos.remove(departamento);
+        if(departamentos.remove(departamento) && departamento.getHospital() == this){
             departamento.setHospital(null);
         }
+        
     }
     
     public void removePaciente(Paciente paciente){
-        if(pacientes.contains(paciente)){
-            pacientes.remove(paciente);
+        if(pacientes.remove(paciente) && paciente.getHospital() == this){           
             paciente.setHospital(null);
         }
     }
