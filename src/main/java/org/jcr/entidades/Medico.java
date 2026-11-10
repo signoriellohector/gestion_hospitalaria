@@ -41,14 +41,20 @@ public class Medico extends Persona{
         this.especialidad = especialidad;
     }
 
-    public void setDepartamento(Departamento departamento) {
-        Validaciones.noNulo(departamento, "Error: Departamento no puede ser nulo.");
-        
-        if (especialidad.equals(departamento.getEspecialidad())){
+    public void setDepartamento(Departamento departamento) {       
+        if (especialidad.equals(departamento.getEspecialidad()) && this.departamento != departamento){
+            Departamento anterior = this.departamento;
             this.departamento = departamento;
-        } else {
-            throw new IllegalArgumentException("Error: Especialidad incompatible con el departamento.");
-        }
+            
+            if (this.departamento != null && !this.departamento.getMedicos().contains(this)){
+                this.departamento.agregarMedico(this);
+            }
+            
+            if (anterior != null) {
+                anterior.removerMedico(this);
+            }
+            
+        } 
     }
     
     public void addCita(Cita cita){

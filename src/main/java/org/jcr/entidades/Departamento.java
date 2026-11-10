@@ -58,17 +58,24 @@ public class Departamento {
     }
     
     public void agregarMedico(Medico medico){
-        if(!medicos.contains(medico)){
+        if (medico.getEspecialidad() != especialidad){
+            throw new IllegalArgumentException("Error: Especialidad incompatible.");
+        } else if(!medicos.contains(medico)){
             medicos.add(medico);
-        }
-        
-        if(medico.getDepartamento() != this){
             medico.setDepartamento(this);
         }
     }
     
+    public void removerMedico(Medico medico){
+        if(medicos.remove(medico) && medico.getDepartamento() == this){
+            medico.setDepartamento(null);
+        }
+        
+    }
+    
     public Sala crearSala(String numero, String tipo){
         Sala sala = new Sala(numero, tipo, this);
+        salas.add(sala);
         return sala;
     }
 
