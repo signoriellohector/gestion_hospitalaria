@@ -19,7 +19,7 @@ import org.jcr.excepciones.CitaException;
  */
 public class CitaManager implements CitaService{
     private final int HORAS_ENTRE_CITAS = 2;
-    private List<Cita> citas;
+    private List<Cita> citas = new ArrayList<>();
 
     @Override
     public Cita programarCita(Paciente paciente, Medico medico, Sala sala, LocalDateTime fechaHora, double costo) throws CitaException {
@@ -35,7 +35,7 @@ public class CitaManager implements CitaService{
             }
             cita = new Cita(paciente, medico, sala, fechaHora, costo);
             
-            
+            citas.add(cita);
             paciente.addCita(cita);
             medico.addCita(cita);
             sala.addCita(cita);
@@ -47,32 +47,39 @@ public class CitaManager implements CitaService{
 
     @Override
     public List<Cita> getCitasPorPaciente(Paciente paciente) {
-        List<Cita> citas = new ArrayList<>();
-        if (paciente != null){
-            citas = paciente.getCitas();
+        List<Cita> citasPaciente = new ArrayList<>();
+        
+        for (Cita c : citas){
+            if(c.getPaciente().equals(paciente)){
+                citasPaciente.add(c);
+            }
         }
         
-        return citas;
+        return citasPaciente;
     }
 
     @Override
     public List<Cita> getCitasPorMedico(Medico medico) {
-        List<Cita> citas = new ArrayList<>();
-        if (medico != null){
-            citas = medico.getCitas();
+        List<Cita> citasMedico = new ArrayList<>();
+        for (Cita c : citas){
+            if(c.getMedico().equals(medico)){
+                citasMedico.add(c);
+            }
         }
         
-        return citas;
+        return citasMedico;
     }
 
     @Override
     public List<Cita> getCitasPorSala(Sala sala) {
-        List<Cita> citas = new ArrayList<>();
-        if (sala != null){
-            citas = sala.getCitas();
+        List<Cita> citasSala = new ArrayList<>();
+        for (Cita c : citas){
+            if(c.getSala().equals(sala)){
+                citasSala.add(c);
+            }
         }
         
-        return citas;
+        return citasSala;
     }
 
     
@@ -105,7 +112,7 @@ public class CitaManager implements CitaService{
         return true;
     }
     
-    private boolean seSuperponen(Cita existente, Cita nueva ){
+    private boolean seSuperponen(LocalDateTime existente, LocalDateTime nueva ){
         return true;
     }
     
