@@ -54,6 +54,19 @@ public class Hospital {
         }
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+    
+
     public List<Departamento> getDepartamentos() {
         return Collections.unmodifiableList(departamentos);
     }
