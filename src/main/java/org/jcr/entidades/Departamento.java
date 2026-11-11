@@ -86,10 +86,6 @@ public class Departamento {
     public List<Sala> getSalas() {
         return Collections.unmodifiableList(salas);
     }
-    
-    List<Medico> getInternalMedico() {
-        return medicos;
-    }
 
     public Hospital getHospital() {
         return hospital;

@@ -62,16 +62,7 @@ public class Hospital {
         return Collections.unmodifiableList(pacientes);
     }
     
-    /*
-    List<Departamento> getInternalDepartamentos() {
-        return departamentos;
-    }
-
-    List<Paciente> getInternalPacientes() {
-        return pacientes;
-    }
-    */
-    
+   
     public void removeDepartamento(Departamento departamento){
         if(departamentos.remove(departamento) && departamento.getHospital() == this){
             departamento.setHospital(null);
