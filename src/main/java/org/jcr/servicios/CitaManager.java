@@ -4,6 +4,7 @@
  */
 package org.jcr.servicios;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.jcr.entidades.Cita;
 import org.jcr.entidades.Medico;
 import org.jcr.entidades.Paciente;
 import org.jcr.entidades.Sala;
+import org.jcr.enums.EstadoCita;
 import org.jcr.excepciones.CitaException;
 
 /**
@@ -25,14 +27,23 @@ public class CitaManager implements CitaService{
     public Cita programarCita(Paciente paciente, Medico medico, Sala sala, LocalDateTime fechaHora, double costo) throws CitaException {
         Cita cita = null;
         validarCita(fechaHora, costo);
-        // verificacion de paciente nulo
-        noNulo(paciente,"Error: El paciente no puede ser nulo");
+        // verificacion de datos nulos
+        try {
+            
+            noNulo(paciente,"Error: El paciente no puede ser nulo");
+            noNulo(medico, "Error: El medico no puede ser nulo");
+            noNulo(sala, "Error: La sala no puede ser nula");
+            noNulo(fechaHora, "Error: La fecha no puede ser nula");
+        } catch (CitaException e){
+            throw new CitaException(e.getMessage());
+        }
+        
+        if (sala.getDepartamento().getEspecialidad() != medico.getEspecialidad()){
+            throw new CitaException("Error: Especialidad de medico y sala incompatibles.");
+        }
         
         if (esSalaDisponible(sala, fechaHora) && esMedicoDisponible(medico, fechaHora)){
             
-            if (sala.getDepartamento().getEspecialidad() != medico.getEspecialidad()){
-                throw new CitaException("Error: Especialidad de medico y sala incompatibles.");
-            }
             cita = new Cita(paciente, medico, sala, fechaHora, costo);
             
             citas.add(cita);
@@ -84,44 +95,69 @@ public class CitaManager implements CitaService{
 
     
     private void validarCita(LocalDateTime fechaHora, double costo) throws CitaException{
-        if (fechaHora == null || fechaHora.isBefore(LocalDateTime.now())){
-            throw new CitaException("Error: La fecha nula o pasada");
+        if (fechaHora.isBefore(LocalDateTime.now())){
+            throw new CitaException("Error: La fecha pasada");
         }
         
         if (costo <= 0 ){
-            throw new CitaException("Erro: El costo no puede ser negativo");
+            throw new CitaException("Error: El costo no puede ser zero o negativo");
         }
         
     }
     
     private boolean esMedicoDisponible(Medico medico, LocalDateTime fechaHora) throws CitaException{
         boolean medicoDisponible = false;
-        if (noNulo(medico, "Error: medico no puede ser nulo")){
+        List<Cita> citasMedico = getCitasPorMedico(medico);
+        if (citasMedico == null || citasMedico.isEmpty()){
+            // si no hay cita con ese medico esta disponible.
+            medicoDisponible = true;
+        } else {
+            for (Cita c : citasMedico){
+                if (c.getEstado() == EstadoCita.CANCELADA || !seSuperponen(c.getFechaHora(), fechaHora)){
+                    medicoDisponible = true;
+                    
+                } else {
+                   throw new CitaException("Error: El medico ya tiene otra cita a menos de 2 horas");
+                   
+                }
+            }
             
         }
         
-        
-        return true;
+        return medicoDisponible;
     }
     
     private boolean esSalaDisponible(Sala sala, LocalDateTime fechaHora) throws CitaException{
-        if (noNulo(sala, "Error: La sala no puede ser nula")){
-            
+        boolean salaDisponible = false;
+        List<Cita> citasSala = getCitasPorSala(sala);
+        if(citasSala == null || citasSala.isEmpty()){
+            // si no hay cita creada con esa sala esta disponible.
+            salaDisponible = true;
+        } else {
+            for (Cita c: citasSala) {
+                if(c.getEstado() == EstadoCita.CANCELADA || !seSuperponen(c.getFechaHora(), fechaHora)){
+                    salaDisponible = true;
+                } else {
+                    throw new CitaException("Error: La sala ya tiene asignada una cita a menos de 2 horas");
+                }
+            }
         }
         
-        return true;
+        return salaDisponible;
     }
     
     private boolean seSuperponen(LocalDateTime existente, LocalDateTime nueva ){
-        return true;
+        
+        long minutos = Math.abs(Duration.between(existente, nueva).toMinutes());
+        return minutos < HORAS_ENTRE_CITAS * 60L;
+
     }
     
-    private boolean noNulo(Object o, String mensage) throws CitaException{
-        if (o == null){
+    private void noNulo(Object valor, String mensage) throws CitaException{
+        if (valor == null){
             throw new CitaException(mensage);
             
         }
-        
-        return true;
+
     }
 }
