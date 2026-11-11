@@ -85,15 +85,10 @@ public abstract class Persona {
     public int getEdad(){
         // se obtiene la fecha actual.
         LocalDate fecha_actual = LocalDate.now();
+        int edad = fecha_actual.getYear() - fechaNacimiento.getYear();
         
-        // se obtiene el cumpleaños de la persona con el año actual
-        LocalDate cumpleanios = MonthDay.from(fechaNacimiento).atYear(fecha_actual.getYear());
-        int edad = 0;
-        
-        if (cumpleanios.isBefore(fecha_actual) || cumpleanios.equals(fecha_actual)) {
-            edad = fecha_actual.getYear() - fechaNacimiento.getYear();
-        } else {
-            edad = fecha_actual.getYear() - fechaNacimiento.getYear() - 1;
+        if (fecha_actual.isBefore(fechaNacimiento.plusYears(edad))){
+            edad--;
         }
         
         return edad;

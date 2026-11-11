@@ -87,6 +87,10 @@ public class Departamento {
         return Collections.unmodifiableList(salas);
     }
 
+    public String getNombre() {
+        return nombre;
+    }   
+
     public Hospital getHospital() {
         return hospital;
     }
