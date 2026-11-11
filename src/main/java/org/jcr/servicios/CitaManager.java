@@ -26,14 +26,14 @@ public class CitaManager implements CitaService{
     @Override
     public Cita programarCita(Paciente paciente, Medico medico, Sala sala, LocalDateTime fechaHora, double costo) throws CitaException {
         Cita cita = null;
-        validarCita(fechaHora, costo);
         // verificacion de datos nulos
         try {
             
+            validarCita(fechaHora, costo);
             noNulo(paciente,"Error: El paciente no puede ser nulo");
             noNulo(medico, "Error: El medico no puede ser nulo");
             noNulo(sala, "Error: La sala no puede ser nula");
-            noNulo(fechaHora, "Error: La fecha no puede ser nula");
+
         } catch (CitaException e){
             throw new CitaException(e.getMessage());
         }
@@ -95,6 +95,7 @@ public class CitaManager implements CitaService{
 
     
     private void validarCita(LocalDateTime fechaHora, double costo) throws CitaException{
+        noNulo(fechaHora, "Error: La fecha no puede ser nula");
         if (fechaHora.isBefore(LocalDateTime.now())){
             throw new CitaException("Error: La fecha pasada");
         }
