@@ -148,9 +148,10 @@ public class CitaManager implements CitaService{
     }
     
     private boolean seSuperponen(LocalDateTime existente, LocalDateTime nueva ){
+        LocalDateTime desde = existente.minusHours(HORAS_ENTRE_CITAS);
+        LocalDateTime hasta = existente.plusHours(HORAS_ENTRE_CITAS);
         
-        long minutos = Math.abs(Duration.between(existente, nueva).toMinutes());
-        return minutos < HORAS_ENTRE_CITAS * 60L;
+        return nueva.isAfter(desde) && nueva.isBefore(hasta);
 
     }
     

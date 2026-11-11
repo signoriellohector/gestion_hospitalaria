@@ -41,8 +41,11 @@ public class Medico extends Persona{
         this.especialidad = especialidad;
     }
 
-    public void setDepartamento(Departamento departamento) {       
-        if (especialidad.equals(departamento.getEspecialidad()) && this.departamento != departamento){
+    public void setDepartamento(Departamento departamento) {
+        if (departamento != null && !especialidad.equals(departamento.getEspecialidad())) {
+            throw new IllegalArgumentException("Error: Departamento incompatible.");
+        }
+        if (this.departamento != departamento){
             Departamento anterior = this.departamento;
             this.departamento = departamento;
             

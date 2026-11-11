@@ -28,7 +28,7 @@ public class Validaciones {
     }
     
     static boolean sonDigitos(String texto){
-        boolean digitos = !texto.isEmpty() && texto.chars().allMatch(c -> c >= '0' && c <= '9');
+        boolean digitos = texto != null && !texto.isEmpty() && texto.chars().allMatch(c -> c >= '0' && c <= '9');
         
         return digitos;
     }
