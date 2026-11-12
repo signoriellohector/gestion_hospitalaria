@@ -52,7 +52,10 @@ public class Cita {
     }
 
     private void setCosto(double costo) {
-        this.costo = costo;
+        if (costo > 0) {
+            this.costo = costo;
+        
+        }
     }
 
     public void setEstado(EstadoCita estado) {
