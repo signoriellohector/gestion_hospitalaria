@@ -26,17 +26,12 @@ public class CitaManager implements CitaService{
     public Cita programarCita(Paciente paciente, Medico medico, Sala sala, LocalDateTime fechaHora, double costo) throws CitaException {
         Cita cita = null;
         // verificacion de datos nulos
-        try {
             
-            validarCita(fechaHora, costo);
-            noNulo(paciente,"Error: El paciente no puede ser nulo");
-            noNulo(medico, "Error: El medico no puede ser nulo");
-            noNulo(sala, "Error: La sala no puede ser nula");
+        validarCita(fechaHora, costo);
+        noNulo(paciente,"Error: El paciente no puede ser nulo");
+        noNulo(medico, "Error: El medico no puede ser nulo");
+        noNulo(sala, "Error: La sala no puede ser nula");
 
-        } catch (CitaException e){
-            throw new CitaException(e.getMessage());
-        }
-        
         if (sala.getDepartamento().getEspecialidad() != medico.getEspecialidad()){
             throw new CitaException("Error: Especialidad de medico y sala incompatibles.");
         }
